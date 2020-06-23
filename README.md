@@ -9,7 +9,7 @@ Roguelike game made with SDL2
 5. make >= 4.1
 
 ## Build Instructions
-1. From terminal, run mkdir build && cd build
+1. From terminal, run `mkdir build && cd build`
 2. ***Move assets folder into build***
-3. From terminal, run cmake .. && make
-4. From terminal, run ./WallsEngine
+3. From terminal, run `cmake .. && make`
+4. From terminal, run `./WallsEngine`
