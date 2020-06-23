@@ -1,14 +1,14 @@
 # CPProguelike
 Roguelike game made with SDL2
 
-##Dependencies
+## Dependencies
 1. SDL >= 2.0
 2. SDL2_image
 3. g++ >= 5.4
 4. cmake >= 3.7+
 5. make >= 4.1
 
-##Build Instructions
+## Build Instructions
 1. From terminal, run mkdir build && cd build
 2. ***Move assets folder into build***
 3. From terminal, run cmake .. && make
