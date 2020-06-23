@@ -1,8 +1,12 @@
 #include "game.h"
 #include "textureManager.h"
 #include "gameObject.h"
+#include "map.h"
 
 GameObject* player, *enemy;
+Map *map;
+
+SDL_Renderer* Game::renderer = nullptr;
 
 Game::Game() {}
 
@@ -32,8 +36,9 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     } else {
         isRunning = false;
     }
-    player = new GameObject("/home/scott/Documents/CppWorkspace/GameEngine/assets/player.png", renderer, 0, 0);
-    enemy = new GameObject("/home/scott/Documents/CppWorkspace/GameEngine/assets/enemy.png", renderer, 50, 50);
+    player = new GameObject("/home/scott/Documents/CppWorkspace/GameEngine/assets/player.png", 0, 0);
+    enemy = new GameObject("/home/scott/Documents/CppWorkspace/GameEngine/assets/enemy.png", 50, 50);
+    map = new Map();
 }
 
 void Game::handleEvents() {
@@ -55,6 +60,7 @@ void Game::update() {
 
 void Game::render() {
     SDL_RenderClear(renderer);
+    map->DrawMap();
     player->Render();
     enemy->Render();
     SDL_RenderPresent(renderer);
