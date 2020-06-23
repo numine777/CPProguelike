@@ -1,8 +1,8 @@
 #include "game.h"
+#include "textureManager.h"
+#include "gameObject.h"
 
-SDL_Texture *playerTex;
-SDL_Rect srcR, destR;
-int cnt;
+GameObject* player, *enemy;
 
 Game::Game() {}
 
@@ -32,13 +32,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     } else {
         isRunning = false;
     }
-    IMG_Init(IMG_INIT_PNG);
-    SDL_Surface *tmpSurface = IMG_Load("/home/scott/Documents/CppWorkspace/GameEngine/assets/player.png");
-    if(!tmpSurface){
-        std::cout<< IMG_GetError() << std::endl;
-    }
-    playerTex = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-    SDL_FreeSurface(tmpSurface);
+    player = new GameObject("/home/scott/Documents/CppWorkspace/GameEngine/assets/player.png", renderer, 0, 0);
+    enemy = new GameObject("/home/scott/Documents/CppWorkspace/GameEngine/assets/enemy.png", renderer, 50, 50);
 }
 
 void Game::handleEvents() {
@@ -54,15 +49,14 @@ void Game::handleEvents() {
 }
 
 void Game::update() {
-    cnt++;
-    destR.h = 64;
-    destR.w = 64;
-    destR.x = cnt;
+    player->Update();
+    enemy->Update();
 }
 
 void Game::render() {
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, playerTex, NULL, &destR);
+    player->Render();
+    enemy->Render();
     SDL_RenderPresent(renderer);
 }
 

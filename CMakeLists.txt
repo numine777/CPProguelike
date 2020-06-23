@@ -13,6 +13,6 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} src assets)
 
-add_executable(WallsEngine src/main.cpp src/game.cpp)
+add_executable(WallsEngine src/main.cpp src/game.cpp src/textureManager.cpp src/gameObject.cpp)
 string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
 target_link_libraries(WallsEngine ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
