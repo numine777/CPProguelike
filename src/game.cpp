@@ -36,8 +36,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     } else {
         isRunning = false;
     }
-    player = new GameObject("/home/scott/Documents/CppWorkspace/GameEngine/assets/player.png", 0, 0);
-    enemy = new GameObject("/home/scott/Documents/CppWorkspace/GameEngine/assets/enemy.png", 50, 50);
+    player = new GameObject("assets/player.png", 0, 0);
+    enemy = new GameObject("assets/enemy.png", 50, 50);
     map = new Map();
 }
 
