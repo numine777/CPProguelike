@@ -1,5 +1,5 @@
-#ifndef game_hpp
-#define game_hpp
+#pragma once 
+
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include <iostream>
@@ -19,10 +19,8 @@ public:
     void clean();
 
     static SDL_Renderer *renderer;
-    
+
 private:
     bool isRunning;
     SDL_Window *window;
 };
-
-#endif
