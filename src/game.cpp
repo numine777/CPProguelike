@@ -3,6 +3,7 @@
 #include "map.h"
 #include "ECS/components.h"
 #include "vector2D.h"
+#include "collision.h"
 
 Map *map;
 Manager manager;
@@ -10,7 +11,18 @@ Manager manager;
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 
+std::vector<ColliderComponent*> Game::colliders;
+
 auto &player(manager.addEntity());
+auto& wall(manager.addEntity());
+
+enum groupLabels : std::size_t
+{
+    groupMap,
+    groupPlayers,
+    groupEnemies,
+    groupColliders
+};
 
 Game::Game() {}
 
@@ -43,9 +55,21 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
     map = new Map();
 
-    player.addComponent<TransformComponent>();
+    //ECS implementation
+
+    Map::LoadMap("../assets/p16x16.map", 16, 16);
+
+    player.addComponent<TransformComponent>(2);
     player.addComponent<SpriteComponent>("../assets/player.png");
     player.addComponent<KeyboardController>();
+    player.addComponent<ColliderComponent>("player");
+    player.AddGroup(groupPlayers);
+
+    wall.addComponent<TransformComponent>(300.f, 300.f, 300, 20, 1);
+    wall.addComponent<SpriteComponent>("../assets/dirt.png");
+    wall.addComponent<ColliderComponent>("wall");
+    wall.AddGroup(groupMap);
+
 }
 
 void Game::handleEvents() {
@@ -65,12 +89,29 @@ void Game::handleEvents() {
 void Game::update() {
     manager.refresh();
     manager.update();
+
+    for (auto cc : colliders) {
+        Collision::AABB(player.getComponent<ColliderComponent>(), *cc);
+    }
 }
+
+auto& tiles(manager.getGroup(groupMap));
+auto& players(manager.getGroup(groupPlayers));
+auto& enemies(manager.getGroup(groupEnemies));
 
 void Game::render() {
     SDL_RenderClear(renderer);
-    map->DrawMap();
-    manager.draw();
+
+    for(auto& t : tiles) {
+        t->draw();
+    }
+    for(auto& p : players) {
+        p->draw();
+    }
+    for(auto& e : enemies) {
+        e->draw();
+    }
+    
     SDL_RenderPresent(renderer);
 }
 
@@ -79,4 +120,10 @@ void Game::clean() {
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
     std::cout << "Game cleaned" << std::endl;
+}
+
+void Game::AddTile(int id, int x, int y) {
+    auto& tile(manager.addEntity());
+    tile.addComponent<TileComponent>(x, y, 32, 32, id);
+    tile.AddGroup(groupMap);
 }

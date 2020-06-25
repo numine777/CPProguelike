@@ -3,6 +3,8 @@
 #include "components.h"
 #include "../textureManager.h"
 #include "SDL2/SDL.h"
+#include "animation.h"
+#include <map>
 
 class SpriteComponent : public Component {
 private:
@@ -10,10 +12,28 @@ private:
     SDL_Texture *texture;
     SDL_Rect srcRect, destRect;
 
+    bool animated = false;
+    int frames = 0;
+    int speed = 100;
+
 public:
+
+    int animIndex = 0;
+
     SpriteComponent() = default;
     SpriteComponent(const char* path) {
         setTex(path);
+    }
+
+    SpriteComponent(const char* path, int nFrames, int mSpeed) {
+        animated = true;
+        frames = nFrames;
+        speed = mSpeed;
+        setTex(path);
+    }
+
+    ~SpriteComponent() {
+        SDL_DestroyTexture(texture);
     }
 
     void setTex(const char* path) {
@@ -24,13 +44,22 @@ public:
         transform = &entity->getComponent<TransformComponent>();
 
         srcRect.x = srcRect.y = 0;
-        srcRect.w = srcRect.h = 32;
-        destRect.w = destRect.h = 64;
+        srcRect.w = transform->width;
+        srcRect.h = transform->height;
+
     }
 
     void update() override {
+        if(animated) {
+            srcRect.x = srcRect.w *static_cast<int>((SDL_GetTicks() / speed) % frames);
+        }
+
+        srcRect.y = animIndex * transform->height;
+
         destRect.x = (int)transform->position.x;
         destRect.y = (int)transform->position.y;
+        destRect.w = transform->width * transform->scale;
+        destRect.h = transform->height * transform->scale;
     }
 
     void draw() override {
