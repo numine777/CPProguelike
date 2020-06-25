@@ -10,6 +10,11 @@ Vector2D::Vector2D(float x, float y) {
     this->y = y;
 }
 
+void Vector2D::Zero() {
+    this->x = 0.0f;
+    this->y = 0.0f;
+}
+
 Vector2D& Vector2D::Add(const Vector2D &vec) {
     this->x += vec.x;
     this->y += vec.y;
