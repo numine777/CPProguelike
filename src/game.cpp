@@ -60,7 +60,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     Map::LoadMap("../assets/p16x16.map", 16, 16);
 
     player.addComponent<TransformComponent>(2);
-    player.addComponent<SpriteComponent>("../assets/player.png");
+    player.addComponent<SpriteComponent>("../assets/player2.png", true);
     player.addComponent<KeyboardController>();
     player.addComponent<ColliderComponent>("player");
     player.AddGroup(groupPlayers);
@@ -111,7 +111,7 @@ void Game::render() {
     for(auto& e : enemies) {
         e->draw();
     }
-    
+
     SDL_RenderPresent(renderer);
 }
 

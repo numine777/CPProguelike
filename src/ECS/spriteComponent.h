@@ -20,15 +20,24 @@ public:
 
     int animIndex = 0;
 
+    std::map<const char*, Animation> animations;
+
     SpriteComponent() = default;
     SpriteComponent(const char* path) {
         setTex(path);
     }
 
-    SpriteComponent(const char* path, int nFrames, int mSpeed) {
-        animated = true;
-        frames = nFrames;
-        speed = mSpeed;
+    SpriteComponent(const char* path, bool isAnimated) {
+        animated = isAnimated;
+
+        Animation idle = Animation(0, 3, 100);
+        Animation walk = Animation(1, 3, 100);
+
+        animations.emplace("Idle", idle);
+        animations.emplace("Walk", walk);
+
+        Play("Idle");
+
         setTex(path);
     }
 
@@ -64,6 +73,12 @@ public:
 
     void draw() override {
         TextureManager::Draw(texture, srcRect, destRect);
+    }
+
+    void Play(const char* animName) {
+        frames = animations[animName].frames;
+        animIndex = animations[animName].index;
+        speed = animations[animName].speed;
     }
 
 };
