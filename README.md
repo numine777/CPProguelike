@@ -1,5 +1,5 @@
 # CPProguelike
-Roguelike game made with SDL2
+Roguelike game engine made with SDL2
 
 ## Dependencies
 1. SDL >= 2.0
