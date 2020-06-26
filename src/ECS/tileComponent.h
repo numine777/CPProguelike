@@ -2,6 +2,7 @@
 
 #include "components.h"
 #include "SDL2/SDL.h"
+#include "../assetManager.h"
 
 class TileComponent : public Component {
 public:
@@ -16,8 +17,8 @@ public:
         SDL_DestroyTexture(texture);
     }
 
-    TileComponent(int srcX, int srcY, int xpos, int ypos, int tsize, int tscale, const char* path) {
-        texture = TextureManager::LoadTexture(path);
+    TileComponent(int srcX, int srcY, int xpos, int ypos, int tsize, int tscale, std::string id) {
+        texture = Game::assets->GetTexture(id);
 
         position.x = xpos;
         position.y = ypos;
@@ -32,8 +33,8 @@ public:
     }
 
     void update() override {
-        destRect.x = position.x - Game::camera.x;
-        destRect.y = position.y - Game::camera.y;
+        destRect.x = static_cast<int>(position.x - Game::camera.x);
+        destRect.y = static_cast<int>(position.y - Game::camera.y);
     }
 
     void draw() override {
