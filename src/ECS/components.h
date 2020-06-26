@@ -7,3 +7,4 @@
 #include "colliderComponent.h"
 #include "tileComponent.h"
 #include "projectileComponent.h"
+#include "uiLabel.h"

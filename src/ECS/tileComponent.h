@@ -1,8 +1,9 @@
 #pragma once
 
-#include "components.h"
-#include "SDL2/SDL.h"
-#include "../assetManager.h"
+#include "ecs.h"
+#include "../vector2D.h"
+#include "../game.h"
+#include "../textureManager.h"
 
 class TileComponent : public Component {
 public:
@@ -20,15 +21,11 @@ public:
     TileComponent(int srcX, int srcY, int xpos, int ypos, int tsize, int tscale, std::string id) {
         texture = Game::assets->GetTexture(id);
 
-        position.x = xpos;
-        position.y = ypos;
-
         srcRect.x = srcX;
         srcRect.y = srcY;
         srcRect.w = srcRect.h = tsize;
-
-        destRect.x = xpos;
-        destRect.y = ypos;
+        position.x = static_cast<float>(xpos);
+        position.y = static_cast<float>(ypos);
         destRect.w = destRect.h = tsize * tscale;
     }
 

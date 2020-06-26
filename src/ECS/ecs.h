@@ -125,8 +125,8 @@ public:
             std::end(v));
         }
 
-        entities.erase(std::remove_if(std::begin(entities), std::end(entities), [](const std::unique_ptr<Entity> &mEntitiy){
-            return !mEntitiy->isActive();
+        entities.erase(std::remove_if(std::begin(entities), std::end(entities), [](const std::unique_ptr<Entity> &mEntity){
+            return !mEntity->isActive();
         }), std::end(entities));
     }
 

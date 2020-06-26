@@ -2,7 +2,7 @@
 
 #include "components.h"
 #include "../textureManager.h"
-#include "SDL2/SDL.h"
+#include <SDL.h>
 #include "animation.h"
 #include <map>
 #include "../assetManager.h"

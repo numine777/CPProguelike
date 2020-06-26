@@ -12,7 +12,7 @@ int main() {
 
     game = new Game();
 
-    game->init("WallsEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false);
+    game->init("WallsEngine", 800, 640, false);
 
     while(game->running()) {
 
